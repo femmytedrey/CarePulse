@@ -3,14 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
-import { toNamespacedPath } from "path";
+// import { toNamespacedPath } from "path";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/UserFormValidation";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export enum formFieldType {
   INPUT = "input",
@@ -39,12 +39,14 @@ const PatientForm = () => {
   async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {  
     setIsloading(true)
     try {
-      // const userData = {name, email, phone}
-      // const user = await createUser(userData)
-      // if(user) router.push(`/patients/${user.$id}/register`)
+      const userData = {name, email, phone}
+      const user = await createUser(userData)
+      if(user) router.push(`/patients/${user.$id}/register`)
       console.log(name, email, phone)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsloading(false)
     }
   }
   return (

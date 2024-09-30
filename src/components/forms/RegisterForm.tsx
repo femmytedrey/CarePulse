@@ -21,6 +21,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import Image from "next/image";
 import { SelectItem } from "../ui/select";
+import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsloading] = useState(false);
@@ -261,7 +262,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         </div>
 
         <section className="space-y-4">
-          <div className="mb-9 space-y-2">
+          <div className="mb-9 space-y-1">
             <h2 className="sub-header">Identification and Verification</h2>
           </div>
         </section>
@@ -287,6 +288,45 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Identification number"
           type="text"
           placeholder="1234567890"
+        />
+
+        <CustomFormField
+          fieldType={formFieldType.SKELETON}
+          control={form.control}
+          name="identificationDocument"
+          label="Scanned copy of identification document"
+          renderSkeleton={(field) => {
+            return (
+              <FormControl>
+                <FileUploader files={field.value} onChange={field.onChange} />
+              </FormControl>
+            );
+          }}
+        />
+
+        <section className="space-y-4">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Consent and Privacy</h2>
+          </div>
+        </section>
+
+        <CustomFormField
+          fieldType={formFieldType.CHECKBOX}
+          control={form.control}
+          name="treatmentConsent"
+          label="I consent to treatment"
+        />
+        <CustomFormField
+          fieldType={formFieldType.CHECKBOX}
+          control={form.control}
+          name="disclosureConsent"
+          label="I consent to disclosure of information"
+        />
+        <CustomFormField
+          fieldType={formFieldType.CHECKBOX}
+          control={form.control}
+          name="privacyConsent"
+          label="I consent to privacyPolicy"
         />
 
         <div className="grid gap-6 grid-cols-1 xl:grid-cols-2"></div>

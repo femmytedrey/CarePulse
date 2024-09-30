@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
 import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 interface CustomProps {
   control: Control<any>;
@@ -144,6 +145,17 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
+    case formFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center space-x-2">
+            <Checkbox id={props.name} checked={field.value} onCheckedChange={field.onChange} onClick={() => {
+              field.onChange(!field.value);
+            }}/>
+            <label htmlFor={props.name}  className="checkbox-label">{props.label}</label>
+          </div>
+        </FormControl>
+      )
 
     default:
       return null;

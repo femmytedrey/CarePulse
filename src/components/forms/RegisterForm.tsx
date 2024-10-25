@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,7 +9,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { PatientFormValidation } from "@/lib/UserFormValidation";
 import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/patient.actions";
+import { createUser, registerPatient } from "@/lib/actions/patient.actions";
 import { formFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -59,10 +58,13 @@ const RegisterForm = ({ user }: { user: User }) => {
         userId: user.$id,
         birthDate: new Date(values.birthDate),
         identificationDocument: formData,
-      }
-      const patient = await registerPatient(patientData)
-      if(patient){
-        router.push(`/patients/${user.$id}/new-appointment`)
+      };
+
+      // @ts-ignore
+      const patient = await registerPatient(patientData);
+
+      if (patient) {
+        router.push(`/patients/${user.$id}/new-appointment`);
       }
     } catch (error) {
       console.log(error);

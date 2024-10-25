@@ -11,7 +11,7 @@ export const getEnvVariables = () => ({
   ENDPOINT: process.env.NEXT_PUBLIC_ENDPOINT,
 })
 
-const {NEXT_PUBLIC_PROJECT_ID, NEXT_PUBLIC_API_KEY, ENDPOINT, DATABASE_ID} = getEnvVariables()
+export const {NEXT_PUBLIC_PROJECT_ID, NEXT_PUBLIC_API_KEY, ENDPOINT, DATABASE_ID, BUCKET_ID, PATIENT_COLLECTION_ID} = getEnvVariables()
 
 // console.log('Appwrite Endpoint:', ENDPOINT);
 // console.log("projectId", NEXT_PUBLIC_PROJECT_ID)

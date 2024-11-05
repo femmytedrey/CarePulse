@@ -15,15 +15,34 @@ import {
 } from "@/components/ui/input-otp";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { decryptKey, encryptKey } from "@/lib/utils";
 
 const PasskeyModal = () => {
   const [open, setOpen] = useState(true);
   const [passkey, setPasskey] = useState("");
   const [error, setError] = useState("");
-  const route = useRouter();
+  const router = useRouter();
+  const path = usePathname();
+
+  const encryptedKey =
+    typeof window !== "undefined"
+      ? window.localStorage.getItem("accesskey")
+      : null;
+
+  useEffect(() => {
+    const accesskey = encryptedKey && decryptKey(encryptedKey)
+    if (path) {
+      if (accesskey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+        setOpen(false);
+        router.push("/admin");
+      } else {
+        setOpen(true)
+      }
+    }
+  }, [encryptedKey]);
 
   const validatePasskey = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -31,6 +50,9 @@ const PasskeyModal = () => {
     e.preventDefault();
     if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
       setError("");
+      const encryptedKey = encryptKey(passkey);
+      localStorage.setItem("accesskey", encryptedKey);
+      setOpen(false);
     } else {
       setError("Invalid passkey. Please try again.");
     }
@@ -38,7 +60,7 @@ const PasskeyModal = () => {
 
   const handleClose = () => {
     setOpen(false);
-    route.push("/");
+    router.push("/");
   };
   return (
     <Dialog open={open} onOpenChange={handleClose}>

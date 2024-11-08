@@ -1,12 +1,13 @@
 import StatCard from "@/components/StatCard";
+import { columns, Payment } from "@/components/Table/columns";
+import { DataTable } from "@/components/Table/DataTable";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 const page = async () => {
   const appointments = await getRecentAppointmentList();
-  console.log(appointments);
+  //console.log(appointments)
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-14">
       <header className="admin-header">
@@ -49,6 +50,8 @@ const page = async () => {
             icon="/assets/icons/cancelled.svg"
           />
         </section>
+
+        <DataTable columns={columns} data={appointments.documents} />
       </main>
     </div>
   );

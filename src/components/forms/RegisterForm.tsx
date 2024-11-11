@@ -24,6 +24,7 @@ import { SelectItem } from "../ui/select";
 import FileUploader from "../FileUploader";
 
 const RegisterForm = ({ user }: { user: User }) => {
+  console.log(user, 'here i am as a user')
   const [isLoading, setIsloading] = useState(false);
   const router = useRouter();
   // 1. Define your form.
@@ -31,9 +32,9 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user ? user.name : "",
+      email: user ? user.email : "",
+      phone: user ? user.phone : "",
     },
   });
 
@@ -126,6 +127,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             name="birthDate"
             label="Date of birth"
+            
           />
           <CustomFormField
             fieldType={formFieldType.SKELETON}

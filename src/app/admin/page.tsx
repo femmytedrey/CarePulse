@@ -1,5 +1,5 @@
 import StatCard from "@/components/StatCard";
-import { columns, Payment } from "@/components/Table/columns";
+import { columns } from "@/components/Table/columns";
 import { DataTable } from "@/components/Table/DataTable";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import Image from "next/image";
@@ -33,7 +33,7 @@ const page = async () => {
         <section className="admin-stat">
           <StatCard
             type="appointments"
-            count={appointments.sheduledCount}
+            count={appointments.scheduledCount}
             label="Scheduled appointments"
             icon="/assets/icons/appointments.svg"
           />
